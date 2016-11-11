@@ -42,9 +42,13 @@ router.route('/order/add')
           // save() will run insert() command of MongoDB.
           // it will add new data in collection.
               if(err) {
-                  response = {"message" : "error"};
+                  response = {"error" : "true",
+                              "message" : "error"
+                              };
               } else {
-                  response = {"message" : "success"};
+                  response = {"error" : "false",
+                              "message" : "success"
+                              };
               }
               res.json(response);
           });
@@ -57,9 +61,13 @@ router.route('/order/views')
         mongoOp.find({},function(err, data){
         // Mongo command to fetch all data from collection.
             if(err) {
-                response = {"message" : "Error fetching data"};
+                response = {"error": "true",
+                            "message" : "Error fetching data"
+                            };
             } else if (data == 0) {
-                response = {"message" : "No any data to show."};
+                response = {"error" : "false",
+                            "message" : "No any data to show."
+                            };
             } else {
                 response = {"message" : data}
             }
@@ -67,20 +75,42 @@ router.route('/order/views')
         });
     });
 
-router.route('order/views/:id')
-    .all(function(req, res) {
+router.route('/order/views/:id')
+    .get(function(req, res) {
       var response = {};
         mongoOp.findById(req.params.id, function(err, data){
         // This will run Mongo Query to fetch data based on ID.
             if(err) {
-                response = {"error" : true, "message" : "Error fetching data"};
+                response = {"error" : true,
+                            "message" : "Error fetching data"
+                            };
             } else {
-                response = {"error" : false, "message" : data};
+                response = {"error" : false,
+                            "message" : data
+                            };
             }
             res.json(response);
         });
     });
 
+
+  router.route('/order/views/:studentId')
+      .get(function(req, res) {
+        var response = {};
+          mongoOp.findById(req.params.studentId, function(err, data){
+          // This will run Mongo Query to fetch data based on ID.
+              if(err) {
+                  response = {"error" : true,
+                              "message" : "Error fetching data"
+                              };
+              } else {
+                  response = {"error" : false,
+                              "message" : data
+                              };
+              }
+              res.json(response);
+          });
+      });
 // =============================================================================
 // Success
 app.use('/api', router);
