@@ -16,13 +16,6 @@ var router = express.Router();
 
 // write and config api routes below
 
-router.route('/')
-    .all(function(req, res) {
-      res.json({"status": "Eroor",
-                "message": "hey guy! Nothing here!"
-              })
-    });
-
 router.route('/order/add')
       .post(function(req,res){
           var db = new mongoOp();
@@ -37,7 +30,8 @@ router.route('/order/add')
           db.studentNumber = studentNumber;
           db.mealNumber = mealNumber;
           db.createTime = Date.now();
-          // Hash the password using SHA1 algorithm.
+
+          //db save data process
           db.save(function(err){
           // save() will run insert() command of MongoDB.
           // it will add new data in collection.
@@ -62,11 +56,11 @@ router.route('/order/views')
         // Mongo command to fetch all data from collection.
             if(err) {
                 response = {"error": "true",
-                            "message" : "Error fetching data"
+                            "message" : "Error fetching data, Database error."
                             };
             } else if (data == 0) {
                 response = {"error" : "false",
-                            "message" : "No any data to show."
+                            "message" : "No any data in database."
                             };
             } else {
                 response = {"message" : data}
@@ -79,10 +73,10 @@ router.route('/order/views/:id')
     .get(function(req, res) {
       var response = {};
         mongoOp.findById(req.params.id, function(err, data){
-        // This will run Mongo Query to fetch data based on ID.
+        // Mongo Query to fetch data based on ID.
             if(err) {
                 response = {"error" : true,
-                            "message" : "Error fetching data"
+                            "message" : "Error fetching, id incorrent"
                             };
             } else {
                 response = {"error" : false,
@@ -94,32 +88,11 @@ router.route('/order/views/:id')
     });
 
 
-  router.route('/order/views/:studentId')
-      .get(function(req, res) {
-        var response = {};
-          mongoOp.findById(req.params.studentId, function(err, data){
-          // This will run Mongo Query to fetch data based on ID.
-              if(err) {
-                  response = {"error" : true,
-                              "message" : "Error fetching data"
-                              };
-              } else {
-                  response = {"error" : false,
-                              "message" : data
-                              };
-              }
-              res.json(response);
-          });
-      });
 // =============================================================================
-// Success
+
 app.use('/api', router);
 
 
-// Handle 500
-app.use(function(error, req, res, next) {
-  res.send('500: Internal Server Error', 500);
-});
 
 app.listen(port);
 console.log('Api server is already run on ' + port);
