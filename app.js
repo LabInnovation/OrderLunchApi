@@ -17,11 +17,6 @@ var rootRouter = express.Router();
 
 // write and config api routes below
 
-rootRouter.route('/')
-    .all(function(req, res) {
-      res.json({"error" : "true", "message" : "nothing here!"});
-    });
-
 router.route('/order/add')
       .post(function(req,res){
           var db = new mongoOp();
@@ -96,8 +91,7 @@ router.route('/order/views/:id')
 
 // =============================================================================
 
-app.use('/api', router);
-app.use('/', rootRouter)
+app.use('/', router);
 
 
 app.listen(port);
