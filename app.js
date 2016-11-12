@@ -13,10 +13,11 @@ var port = process.env.PORT || 3000;
 
 // =============================================================================
 var router = express.Router();
+var rootRouter = express.Router();
 
 // write and config api routes below
 
-router.route('/')
+rootRouter.route('/')
     .all(function(req, res) {
       res.json({"error" : "true", "message" : "nothing here!"});
     });
@@ -96,8 +97,8 @@ router.route('/order/views/:id')
 // =============================================================================
 
 app.use('/api', router);
-
+app.use('/', rootRouter)
 
 
 app.listen(port);
-console.log('Api server is already run on ' + port);
+console.log('Api server is already run on Port' + port);
