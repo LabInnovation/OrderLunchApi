@@ -3,11 +3,13 @@
 
 var express    = require('express');
 var app        = express();
+var cors       = require('cors');
 var bodyParser = require('body-parser');
-var mongoOp     =   require("./models/db");
+var mongoOp    =   require("./models/db");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 var port = process.env.PORT || 3000;
 
@@ -15,12 +17,16 @@ var port = process.env.PORT || 3000;
 var router = express.Router();
 var rootRouter = express.Router();
 
+
 // write and config api routes below
 
 router.route('/order/add')
       .post(function(req,res){
           var db = new mongoOp();
           var response = {};
+          // Req user client Ip address
+          var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+
           //add param process
           var studentId = req.param('studentid');
           var studentNumber = req.param('studentnumber');
@@ -31,6 +37,7 @@ router.route('/order/add')
           db.studentNumber = studentNumber;
           db.mealNumber = mealNumber;
           db.createTime = Date.now();
+          db.ipAddr = ip;
 
           //db save data process
           db.save(function(err){

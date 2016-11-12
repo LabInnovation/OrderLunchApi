@@ -7,7 +7,8 @@ var orderSchema  = {
     "studentId" : String,
     "studentNumber" : String,
     "mealNumber" : String,
-    "createTime" : Date
+    "createTime" : Date,
+    "ipAddr" : String
 
 };
 // create model if not exists.
