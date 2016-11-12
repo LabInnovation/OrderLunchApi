@@ -16,6 +16,11 @@ var router = express.Router();
 
 // write and config api routes below
 
+router.route('/')
+    .all(function(req, res) {
+      res.json({"error" : "true", "message" : "nothing here!"});
+    });
+
 router.route('/order/add')
       .post(function(req,res){
           var db = new mongoOp();

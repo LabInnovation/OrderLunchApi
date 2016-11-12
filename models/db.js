@@ -8,6 +8,7 @@ var orderSchema  = {
     "studentNumber" : String,
     "mealNumber" : String,
     "createTime" : Date
+
 };
 // create model if not exists.
 module.exports = mongoose.model('order',orderSchema);
