@@ -1,4 +1,4 @@
-# Api
+# API
 ## fetch all of data from Api
 ```
 localhost:3000/order/views/
@@ -11,6 +11,8 @@ For example:
 ```
 localhost:3000/order/views/582583b2f242d51007336747
 ```
+## More
+I will be make more ways to fetch data.
 
 # Database
 ## Delete all of data
